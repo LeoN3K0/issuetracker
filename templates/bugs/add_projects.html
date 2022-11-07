@@ -1,0 +1,61 @@
+{% extends 'bugs/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+{{ form.media }}
+{{ form.media.css }}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Create A Project</h1>
+    {% if submitted %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div>
+        <a href="{% url 'add_project' %}" type="button" class="btn btn-primary">Create Another Project</a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-8 mb-0">
+            {{ form.name|as_crispy_field }}
+            </div>
+        </div>
+         <div class="form-row">
+            <div class="form-group col-md-4 mb-0">
+            {{ form.start_date|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+            {{ form.end_date|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4 mb-0">
+             {{ form.project_lead|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+             {{ form.assigned_users|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-8 mb-0">
+             {{ form.description|as_crispy_field }}
+            </div>
+        </div>
+        {% if request.user.first_name == 'Demo' %}
+        <input type="submit" value="Submit" class="btn btn-secondary" disabled>
+        </br>
+        <small>Demo accounts cant submit new projects.</small>
+        {% else %}
+        <input type="submit" value="Submit" class="btn btn-secondary">
+        {% endif %}
+    </form>
+    </div>
+    {% endif %}
+</div>
+{{ form.media.js }}
+{% endblock %}

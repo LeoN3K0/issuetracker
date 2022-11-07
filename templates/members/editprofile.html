@@ -1,0 +1,65 @@
+{% extends 'bugs/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{{ form.media }}
+{{ form.media.css }}
+<div class="container-fluid px-4">
+  </br>
+  <div class="row">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="col-lg-4">
+          <div class="card">
+              <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                      <img src="{{ user.profile.avatar.url }}" alt="Admin" class="rounded-circle" width="150">
+                      {{ profile_form.avatar|as_crispy_field }}
+                      <div class="mt-3">
+                          <h4>{{ full_name }}</h4>
+                          <p class="text-secondary mb-1">{{ group }}</p>
+                      </div>
+                  </div>
+                  <hr class="my-4">
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-8">
+          <div class="card">
+              <div class="card-body">
+                  <div class="row mb-3">
+                      <div class="col-sm-3">
+                          <h6 class="mb-0">First Name</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        {{ user_form.first_name|as_crispy_field }}
+                      </div>
+                  </div>
+                <div class="row mb-3">
+                      <div class="col-sm-3">
+                          <h6 class="mb-0">Last Name</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        {{ user_form.last_name|as_crispy_field }}
+                      </div>
+                  </div>
+                  <div class="row mb-3">
+                      <div class="col-sm-3">
+                          <h6 class="mb-0">Email</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        {{ user_form.email|as_crispy_field }}
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-3"></div>
+                      <div class="col-sm-9 text-secondary">
+                          <button type="submit" class="btn btn-info">Save Changes</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+          </form>
+  </div>
+</div>
+{% endblock %}

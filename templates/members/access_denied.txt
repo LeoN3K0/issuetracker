@@ -1,0 +1,10 @@
+{% autoescape off %}
+Hello,
+
+
+We apologize your request has been denied.
+
+Sincerely,
+BugTracker Team
+
+{% endautoescape %}

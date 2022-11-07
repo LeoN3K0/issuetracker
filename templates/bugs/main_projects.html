@@ -1,0 +1,140 @@
+{% extends 'bugs/base.html' %}
+{% load render_table from django_tables2 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+{{ form.media }}
+{{ form.media.css }}
+<div class="container-fluid px-4" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <br/>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        {{ name }}
+                        <div class="header-split">
+                            ID: {{ project.project_id }}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="splitb">
+                                Start Date: {{ project.start_date }}
+                                <div class="header-split">
+                                    Projected End Date: {{ project.end_date }}
+                                </div>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="header-split">
+                                Description:
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="header-split">
+                                {{ project.description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Assigned Leaders
+                    </div>
+                    <div class="card-body">
+                        {% render_table leader_table%}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Assigned Users
+                    </div>
+                    <div class="card-body">
+                        {% render_table assigned_table%}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Submitted Issue Tickets
+                        <div class="header-split">
+                             <button class="btn btn-primary" data-toggle="modal" data-target="#myModel">Submit Ticket</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% render_table issuetable%}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="project-btn">
+                {% if not user_groups %}
+                {% if leaders or admin %}
+                {% if request.user.first_name == 'Demo' %}
+                <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">Edit {{ name }}</a>
+                <a href="#" class="btn btn-danger disabled" role="button" aria-disabled="true">Delete {{ name }}</a>
+                {% else %}
+                <a href="{% url 'update_project' name %}" class="btn btn-primary">Edit {{ name }}</a>
+                <a href="{% url 'delete_project' name %}" class="btn btn-danger">Delete {{ name }}</a>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            {% if request.user.first_name == 'Demo' %}
+            {% if not user_groups %}
+                <small>Demo accounts cannot change projects</small>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+<div class="modal fade" id="myModel"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-focus="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLongTitle">Submit Ticket for {{ name }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form method="POST">
+            {% csrf_token %}
+          <div class="modal-body">
+                <div class="form-row">
+                <div class="form-group col-md-4 mb-0">
+                {{ form.related_project|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-4 mb-0">
+                {{ form.priority|as_crispy_field }}
+                </div>
+                </div>
+                <div class="form-row">
+                <div class="form-group col-md-12 mb-0">
+                 {{ form.description|as_crispy_field }}
+                </div>
+                </div>
+          </div>
+          <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" name="submit_ticket" value="Submit Ticket">
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    $('#id_related_project').select2({
+        dropdownParent: $('#myModal')
+    });
+</script>
+{{ form.media.js }}
+{% endblock %}

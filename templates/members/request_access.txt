@@ -1,0 +1,16 @@
+{% autoescape off %}
+Hello,
+
+You received a request for access to the bugtracker website. Below is the requesters' info.
+
+Name: {{ first_name }} {{ last_name }}
+
+Email: {{ request_email }}
+
+Reason:
+{{ reason }}
+
+Sincerely,
+BugTracker Team
+
+{% endautoescape %}

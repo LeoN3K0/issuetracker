@@ -1,0 +1,41 @@
+{% extends 'bugs/base.html' %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% block content %}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Issue Tickets<a href="{% url 'submit_ticket' %}" class="btn btn-primary header-split" role="button">Submit Ticket</a></h1>
+    <br/>
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Tickets-By Projects
+                    </div>
+                    <div class="card-body">
+                        {% render_table ticket_table %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Your Assigned Tickets
+                    </div>
+                    <div class="card-body">
+                        {% render_table assigned_table %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Your Submitted Tickets
+                    </div>
+                    <div class="card-body">
+                        {% render_table submitted_table %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

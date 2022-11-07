@@ -1,0 +1,31 @@
+{% extends 'bugs/base.html' %}
+{% block content %}
+<div class="container-fluid px-4" xmlns="http://www.w3.org/1999/html">
+        {% if searched %}
+        <h4 class="mt-4">{{ search_list_num }} results for {{ searched }}</h4>
+        </br>
+        <div>
+            {% for results in search_list %}
+            <div class="row">
+                <div class="col-xl-4">
+                    {% if results in project_list %}
+                    <div class="card-body">
+                    Project: <a href="{% url 'project_page' results %}" >{{ results }}</a>
+                    </div>
+                    </br>
+                    {% endif %}
+                    {% if results in ticket_list %}
+                    <div class="card-body">
+                    Ticket: <a href="{% url 'ticket_page' results %}" >{{ results }}</a>
+                    </div>
+                    </br>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+         {% else %}
+        <h4 class="mt-4">No Result Found</h4>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'bugs/base.html' %}
+{% load render_table from django_tables2 %}
+{% block content %}
+<div class="container-fluid px-4">
+  </br>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <div class="card">
+      <div class="card-body">
+      <div class="d-flex flex-column align-items-center text-center">
+        <img src="{{ user.profile.avatar.url }}" alt="Admin" class="rounded-circle" width="150">
+      <div class="mt-3">
+      <h4>{{ full_name }}</h4>
+      <p class="text-secondary mb-1"></p>
+        {{ group }}
+      </div>
+      </div>
+      </div>
+      </div>
+      </br>
+      <div class="card">
+        <div class="card-body">
+          {% if admin %}
+          <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">All</i>Projects</h6>
+          {% else %}
+          <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Projects</h6>
+          {% endif %}
+          {% render_table projects %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card mb-3">
+      <div class="card-body">
+      <div class="row">
+      <div class="col-sm-3">
+      <h6 class="mb-0">Full Name</h6>
+      </div>
+      <div class="col-sm-9 text-secondary">
+        {{ full_name }}
+      </div>
+      </div>
+      <hr>
+      <div class="row">
+      <div class="col-sm-3">
+      <h6 class="mb-0">Email</h6>
+      </div>
+      <div class="col-sm-9 text-secondary">
+        {{ user.email }}
+      </div>
+      </div>
+      <hr>
+      <div class="row">
+      <div class="col-sm-6">
+        {% if request.user.first_name != 'Demo' %}
+       <a class="btn btn-info" href="{% url 'edit_profile' user.full_name %}">Edit</a>
+        {% endif %}
+      </div>
+      <div class="col-sm-6">
+        {% if request.user.first_name != 'Demo' %}
+       <a class="btn btn-info" href="{% url 'password_change' %}">Change Password</a>
+        {% endif %}
+      </div>
+      </div>
+      </div>
+      </div>
+    <div class="row">
+      <div class="col-sm-6 mb-3">
+      <div class="card">
+      <div class="card-body">
+        {% if admin %}
+        <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">All</i>Open Tickets</h6>
+        {% else %}
+        <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Tickets</h6>
+        {% endif %}
+        {% render_table assigned %}
+      </div>
+      </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+      <div class="card">
+      <div class="card-body">
+        {% if admin %}
+        <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">All</i>Closed Tickets</h6>
+        {% else %}
+        <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">submission</i>Tickets</h6>
+        {% endif %}
+        {% render_table submitted %}
+      </div>
+      </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

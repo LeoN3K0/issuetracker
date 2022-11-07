@@ -1,0 +1,196 @@
+{% extends 'bugs/base.html' %}
+{% load render_table from django_tables2 %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+{{ form.media }}
+{{close_form.media}}
+{{ form.media.css }}
+<div class="container-fluid px-4" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <br/>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="header-split-spcl">
+                            <div>Ticket: {{ ticket_id }}</div>
+                            <div>Priority: {{ issue.priority }}</div>
+                            <div>Progress: {{ issue.issue_fixed }}</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="splitb">
+                                Submitted Date: {{ issue.issue_date }}
+                                <div class="header-split">
+                                Submitted By: {{ issue.submitter }}
+                                </div>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="splitb">
+                                Fixed By: {{ issue.fixed_by }}
+                                <div class="header-split">
+                                    Fixed Date: {{ issue.issue_date_complete }}
+                                </div>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="splitb">
+                                Closed By: {{ issue.closed_by }}
+                                <div class="header-split">
+                                    Closed Date: {{ issue.closed_date }}
+                                </div>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                             <div class="splitb">
+                                Detailed Description:
+                                <div class="header-split">
+                                    Related Project: {{ issue.related_project }}
+                                </div>
+                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="header-split">
+                                {{ issue.description }}
+                            </div>
+                        </div>
+                        </br>
+                        <div class="row">
+                            <div class="header-split">
+                                Comments:
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="header-split">
+                                {{ spcform }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Assigned Users
+                         <div class="header-split">
+                             <form method="POST">
+                                {% csrf_token %}
+                                 {% if not assigned1  %}
+                                 {% if request.user.first_name == 'Demo' %}
+                                <button class="btn btn-info btn-sm disabled" name="assign_self">Claim</button>
+                                 {% else %}
+                                 <button class="btn btn-info btn-sm" name="assign_self">Claim</button>
+                                 {% endif %}
+                                 {% endif %}
+                             </form>
+                             {% if issue.issue_fixed != 'Fixed' or issue.issue_fixed != 'Closed' %}
+                             {% if assigned1 %}
+                             {% if not user_groups %}
+                             {% if assigned2 %}
+                             {% if request.user.first_name == 'Demo' %}
+                             <button class="btn btn-info btn-sm disabled" data-toggle="modal" data-target="#myUserModal">Assign Assistance</button>
+                             {% else %}
+                             <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myUserModal">Assign Assistance</button>
+                             {% endif %}
+                             {% endif %}
+                             {% else %}
+                             {% if request.user.first_name == 'Demo' %}
+                             <button class="btn btn-info btn-sm disabled" data-toggle="modal" data-target="#myUserModal">Update Assignees</button>
+                             {% else %}
+                             <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myUserModal">Update Assignees</button>
+                             {% endif %}
+                             {% endif %}
+                             {% endif %}
+                             {% endif %}
+                         </div>
+                    </div>
+                    <div class="card-body">
+                        {% render_table assigned_table%}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="project-btn">
+                {% if assigned2 %}
+                {% if issue.issue_fixed != 'Closed' %}
+                {% if request.user.first_name == 'Demo' %}
+                <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">Edit Ticket</a>
+                {% else %}
+                <button class="btn btn-primary" data-toggle="modal" data-target="#myCloseModal">Edit Ticket</button>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            {% if request.user.first_name == 'Demo' %}
+                <small>Demo accounts cannot make changes</small>
+            {% endif %}
+        </div>
+    </div>
+
+<div class="modal fade" id="myUserModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-focus="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Assigned Users</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form method="POST">
+            {% csrf_token %}
+          <div class="modal-body">
+              {{ form.assigned_users|as_crispy_field }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" name="save_user" value="Save changes">
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myCloseModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-focus="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLongTitle">Close Ticket</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form method="POST">
+            {% csrf_token %}
+          <div class="modal-body">
+              {{ form1.priority|as_crispy_field }}
+              {{ form1.issue_fixed|as_crispy_field }}
+              {{ form1.fixed_comment|as_crispy_field }}
+          </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-primary" name="edit_ticket" value="Edit Ticket">
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    $('#id_assigned_users').select2({
+        dropdownParent: $('#myUserModal')
+    });
+
+    $('#id_assigned_users').select2({
+        dropdownParent: $('#myCloseModal')
+    });
+</script>
+{{ form.media.js }}
+{% endblock %}

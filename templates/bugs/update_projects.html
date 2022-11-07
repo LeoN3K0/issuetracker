@@ -1,0 +1,43 @@
+{% extends 'bugs/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+{{ form.media }}
+{{ form.media.css }}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Update Project...</h1>
+    <div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-8 mb-0">
+            {{ form.name|as_crispy_field }}
+            </div>
+        </div>
+         <div class="form-row">
+            <div class="form-group col-md-4 mb-0">
+            {{ form.start_date|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+            {{ form.end_date|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4 mb-0">
+             {{ form.project_lead|as_crispy_field }}
+            </div>
+            <div class="form-group col-md-4 mb-0">
+             {{ form.assigned_users|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-8 mb-0">
+             {{ form.description|as_crispy_field }}
+            </div>
+        </div>
+        <input type="submit" value="Update" class="btn btn-secondary">
+    </form>
+    </div>
+</div>
+{{ form.media.js }}
+{% endblock %}

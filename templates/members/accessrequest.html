@@ -1,16 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'bugs/base.html' %}
 {% load static %}
+{% load render_table from django_tables2 %}
 {% block content %}
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Projects</h1>
+    <h1 class="mt-4">Requested Access</h1>
     <br/>
         <div class="row">
             <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        Projects
+                        Requests
                     </div>
                     <div class="card-body">
+                        {% render_table table%}
                     </div>
                 </div>
             </div>

@@ -1,0 +1,12 @@
+{% autoescape off %}
+Hello,
+
+
+Your request has been accepted and account has been set up please follow the link bellow to reset your password before you log in.
+
+{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+Sincerely,
+BugTracker Team
+
+{% endautoescape %}

@@ -1,0 +1,30 @@
+{% extends 'bugs/base.html' %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% block content %}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Projects</h1>
+    <br/>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Projects
+                    </div>
+                    <div class="card-body">
+                        {% for group in request.user.groups.all %}
+                        {% if group.name == 'General User' or group.name == 'Project Leaders' or group.name == 'Admin' %}
+                        {% render_table table%}
+                        {% endif %}
+                        {% if group.name == 'Project Leaders' or group.name == 'Admin' %}
+                        <div class="spc">
+                            <a href="{% url 'add_project' %}" type="button" class="btn btn-primary spc">Add Project</a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -39,9 +39,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_tables2',
-    'member',
+    'django_filters',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
+    'rest_framework',
+    'crispy_forms',
+    'django_select2',
+    'member.apps.MemberConfig',
     'bugtracker',
+
 ]
+
+SELECT2_CSS = ['css/select2.css',
+               "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css",
+
+               ]
+SELECT2_JS = "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+SELECT2_I18N_PATH = "https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n"
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = "member.CustomUser"
 
@@ -68,6 +85,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'bugtracker.context_processors.close_form_processor',
             ],
         },
     },
@@ -105,14 +123,28 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-DATE_FORMAT = ( ( 'm-d-Y' ))
-DATE_INPUT_FORMATS = ( ('%m-%d-%Y'),)
-DATETIME_FORMAT = (( 'm-d-Y H:i' ))
-DATETIME_INPUT_FORMATS = (('%m-%d-%Y %H:%i'),)
+DATE_FORMAT = (('m/d/Y'))
+DATE_INPUT_FORMATS = [
+    '%m/%d/%Y',  # '10/25/2006'
+    '%m/%d/%y',  # '10/25/06'
+    '%b %d %Y',  # 'Oct 25 2006'
+    '%b %d, %Y',  # 'Oct 25, 2006'
+    '%d %b %Y',  # '25 Oct 2006'
+    '%d %b, %Y',  # '25 Oct, 2006'
+    '%B %d %Y',  # 'October 25 2006'
+    '%B %d, %Y',  # 'October 25, 2006'
+    '%d %B %Y',  # '25 October 2006'
+    '%d %B, %Y',  # '25 October, 2006'
+    '%Y-%m-%d',  # '2006-10-25'
+]
+DATETIME_FORMAT = (( 'm/d/Y H:i' ))
+DATETIME_INPUT_FORMATS = (('%m/%d/%Y %H:%i'),)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -129,10 +161,13 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+

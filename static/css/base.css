@@ -11433,7 +11433,7 @@ body {
 }
 .sb-topnav.navbar-dark #sidebarToggle {
   position:relative;
-  left: 5px;
+  right: 65px;
   color: rgba(255, 255, 255, 0.5);
 }
 .sb-topnav.navbar-light #sidebarToggle {
@@ -11709,9 +11709,9 @@ body {
 .logo img {
     padding: 10px;
     position: relative;
-    left: 5px;
-    width: 10%;
-    height: 10%;
+    left: 25px;
+    width: 7%;
+    height: 7%;
 }
 .logo img:hover {
     filter: drop-shadow(0 0 0.90rem rgb(95,240,106,.9));
@@ -11719,29 +11719,56 @@ body {
     -moz-filter:drop-shadow(0 0 0.90rem rgb(95,240,106,.9));
 }
 
-.project-card-title{
+.project-btn {
+    width: 100%;
     display: flex;
-    justify-content: space-evenly;
-}
-
-.project-card{
-    display: flex;
-    justify-content: space-evenly;
-    text-overflow: ellipsis;
+    overflow: auto;
     white-space: nowrap;
-    overflow: hidden;
+    margin: 0 auto;
+    justify-content: space-between;
 }
 
-.card-divider {
-  height: 0;
-  margin: 0.5rem 0;
-  overflow: hidden;
-  border-top: 2px solid rgba(0, 0, 0);
+.spc {
+    float: right;
 }
 
-.card-divider2 {
-  height: 0;
-  margin: 0.5rem 0;
-  overflow: hidden;
-  border-top: 1px solid rgba(0, 0, 0, 0.65);
+.header-split {
+    float: right;
 }
+
+.header-split-spcl {
+    display: flex;
+    justify-content: space-between;
+}
+
+.splitb {
+    width: 100%;
+    display: flex;
+    white-space: nowrap;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+
+.usergroup {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.no-data {
+    text-align: center;
+    position: absolute;
+    left: 30%;
+    top: 225px;
+    z-index: 20;"
+}
+.no-data1 {
+    text-align: center;
+    position: absolute;
+    left: 45%;
+    top: 150px;
+    z-index: 20;"
+}
+
+
