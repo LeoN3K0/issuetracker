@@ -19,11 +19,12 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <div class="mobil-container">
                         <div class="row">
                             <div class="splitb">
                                 Submitted Date: {{ issue.issue_date }}
                                 <div class="header-split">
-                                Submitted By: {{ issue.submitter }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;Submitted By: {{ issue.submitter }}
                                 </div>
                             </div>
                         </div>
@@ -32,7 +33,7 @@
                             <div class="splitb">
                                 Fixed By: {{ issue.fixed_by }}
                                 <div class="header-split">
-                                    Fixed Date: {{ issue.issue_date_complete }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;Fixed Date: {{ issue.issue_date_complete }}
                                 </div>
                             </div>
                         </div>
@@ -41,7 +42,7 @@
                             <div class="splitb">
                                 Closed By: {{ issue.closed_by }}
                                 <div class="header-split">
-                                    Closed Date: {{ issue.closed_date }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;Closed Date: {{ issue.closed_date }}
                                 </div>
                             </div>
                         </div>
@@ -50,7 +51,7 @@
                              <div class="splitb">
                                 Detailed Description:
                                 <div class="header-split">
-                                    Related Project: {{ issue.related_project }}
+                                &nbsp;&nbsp;&nbsp;&nbsp;Related Project: {{ issue.related_project }}
                                 </div>
                              </div>
                         </div>
@@ -69,6 +70,7 @@
                             <div class="header-split">
                                 {{ spcform }}
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -163,7 +165,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalLongTitle">Close Ticket</h5>
+        <h5 class="modal-title" id="ModalLongTitle">Edit Ticket</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -176,7 +178,7 @@
               {{ form1.fixed_comment|as_crispy_field }}
           </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" name="edit_ticket" value="Edit Ticket">
+            <input type="submit" class="btn btn-primary" name="edit_ticket" value="Submit Changes">
           </div>
         </form>
     </div>

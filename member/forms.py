@@ -45,14 +45,19 @@ class RequestAccessForm(forms.ModelForm):
         self.fields['email'].label = ""
         self.fields['email'].widget.attrs['placeholder'] = 'Email'
         self.fields['email'].widget.attrs['autocomplete'] = 'off'
+        self.fields['email'].widget.attrs['class'] = 'form-style'
         self.fields['first_name'].label = ""
         self.fields['first_name'].widget.attrs['placeholder'] = 'First Name'
+        self.fields['first_name'].widget.attrs['class'] = 'form-style'
         self.fields['last_name'].label = ""
         self.fields['last_name'].widget.attrs['placeholder'] = 'Last Name'
+        self.fields['last_name'].widget.attrs['class'] = 'form-style'
         self.fields['reason'].label = ""
         self.fields['reason'].widget.attrs['placeholder'] = 'Reason for request'
         self.fields['reason'].widget.attrs['cols'] = 20
         self.fields['reason'].widget.attrs['rows'] = 5
+        self.fields['reason'].widget.attrs['class'] = 'form-style'
+
 
 
 class CustomUserCreationForm(UserCreationForm):

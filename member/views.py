@@ -77,18 +77,18 @@ class login_register(View):
                 email_template_name = "members/request_access.txt"
                 c = {
                     "email": admin.email,
-                    'domain': '127.0.0.1:8000',
-                    'site_name': 'Website',
+                    'domain': 'emalberg.pythonanywhere.com',
+                    'site_name': 'emalberg.pythonanywhere.com',
                     "first_name": ab.get('first_name'),
                     "last_name": ab.get('last_name'),
                     "request_email": ab.get('email'),
                     "reason": ab.get('reason'),
-                    'protocol': 'http',
+                    'protocol': 'https',
                 }
                 email = render_to_string(email_template_name, c)
                 messages.success(request, 'Request Email has been sent, please give up to 24hrs before requesting again.')
                 try:
-                    send_mail(subject, email, 'admin@example.com', [admin.email], fail_silently=False)
+                    send_mail(subject, email, 'erich.malberg@gmail.com', [admin.email], fail_silently=False)
                 except BadHeaderError:
                     return HttpResponse('Invalid header found.')
                 return redirect('login_register')
@@ -118,16 +118,16 @@ def password_reset_request(request):
                     email_template_name = "members/password_reset_email.txt"
                     c = {
                     "email":user.email,
-                    'domain':'127.0.0.1:8000',
-                    'site_name': 'Website',
+                    'domain':'emalberg.pythonanywhere.com',
+                    'site_name': 'emalberg.pythonanywhere.com/bugtracker/',
                     "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                     "user": user,
                     'token': default_token_generator.make_token(user),
-                    'protocol': 'http',
+                    'protocol': 'https',
                     }
                     email = render_to_string(email_template_name, c)
                     try:
-                        send_mail(subject, email, 'admin@example.com', [user.email], fail_silently=False)
+                        send_mail(subject, email, 'erich.malberg@gmail.com', [user.email], fail_silently=False)
                     except BadHeaderError:
                         return HttpResponse('Invalid header found.')
                     return redirect("/password_reset/done/")
@@ -217,15 +217,15 @@ def deny_access(request, email):
     email_template_name = "members/access_denied.txt"
     c = {
         "email": requester.email,
-        'domain': '127.0.0.1:8000',
-        'site_name': 'Website',
+        'domain': 'emalberg.pythonanywhere.com',
+        'site_name': 'emalberg.pythonanywhere.com/bugtracker/',
         "first_name": requester.first_name,
         "last_name": requester.last_name,
-        'protocol': 'http',
+        'protocol': 'https',
     }
     email = render_to_string(email_template_name, c)
     try:
-        send_mail(subject, email, 'admin@example.com', [requester.email], fail_silently=False)
+        send_mail(subject, email, 'erich.malberg@gmail.com', [requester.email], fail_silently=False)
         requester.delete()
     except BadHeaderError:
         return HttpResponse('Invalid header found.')
@@ -245,17 +245,17 @@ def accept_access(request, email):
     my_group.user_set.add(user)
     c = {
         "email": requester.email,
-        'domain': '127.0.0.1:8000',
-        'site_name': 'Website',
+        'domain': 'emalberg.pythonanywhere.com',
+        'site_name': 'emalberg.pythonanywhere.com/bugtracker/',
         "first_name": requester.first_name,
         "last_name": requester.last_name,
         'token': default_token_generator.make_token(user),
         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-        'protocol': 'http',
+        'protocol': 'https',
     }
     email = render_to_string(email_template_name, c)
     try:
-        send_mail(subject, email, 'admin@example.com', [requester.email], fail_silently=False)
+        send_mail(subject, email, 'erich.malberg@gmail.com', [requester.email], fail_silently=False)
         requester.delete()
     except BadHeaderError:
         return HttpResponse('Invalid header found.')

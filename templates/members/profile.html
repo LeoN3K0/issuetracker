@@ -8,7 +8,7 @@
       <div class="card">
       <div class="card-body">
       <div class="d-flex flex-column align-items-center text-center">
-        <img src="{{ user.profile.avatar.url }}" alt="Admin" class="rounded-circle" width="150">
+        <img src="{{ user.profile.avatar.url }}" alt="Admin" class="profile_img">
       <div class="mt-3">
       <h4>{{ full_name }}</h4>
       <p class="text-secondary mb-1"></p>
@@ -46,7 +46,9 @@
       <h6 class="mb-0">Email</h6>
       </div>
       <div class="col-sm-9 text-secondary">
+        {% if request.user.first_name != 'Demo' %}
         {{ user.email }}
+        {% endif %}
       </div>
       </div>
       <hr>
